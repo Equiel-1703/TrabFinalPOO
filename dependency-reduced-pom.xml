@@ -27,7 +27,7 @@
               <transformers>
                 <transformer>
                   <manifestEntries>
-                    <Main-Class>ufpel.trabfinalpoo.Launcher</Main-Class>
+                    <Main-Class>ufpel.trabfinalpoo.helperClasses.Launcher</Main-Class>
                   </manifestEntries>
                 </transformer>
               </transformers>

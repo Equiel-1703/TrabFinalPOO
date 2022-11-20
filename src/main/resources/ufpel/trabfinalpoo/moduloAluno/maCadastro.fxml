@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="484.0" prefWidth="600.0" style="-fx-background-color: #1D2D42;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ufpel.trabfinalpoo.moduloAluno.MaCadastroController">
+   <children>
+      <VBox alignment="CENTER" layoutY="76.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="343.0" prefWidth="600.0" spacing="10.0">
+         <children>
+            <HBox alignment="CENTER" prefHeight="40.0" prefWidth="600.0">
+               <children>
+                  <Label prefHeight="27.0" prefWidth="155.0" text="Nome" textFill="WHITE">
+                     <font>
+                        <Font name="Segoe UI Light" size="18.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="txtNome" prefHeight="26.0" prefWidth="215.0" promptText="Seu nome" />
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" prefHeight="40.0" prefWidth="600.0">
+               <children>
+                  <Label prefHeight="27.0" prefWidth="155.0" text="e-Mail" textFill="WHITE">
+                     <font>
+                        <Font name="Segoe UI Light" size="18.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="txtEmail" prefHeight="26.0" prefWidth="215.0" promptText="**********@inf.ufpel.edu.br" />
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" prefHeight="40.0" prefWidth="600.0">
+               <children>
+                  <Label prefHeight="27.0" prefWidth="155.0" text="Matrícula" textFill="WHITE">
+                     <font>
+                        <Font name="Segoe UI Light" size="18.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="txtMatricula" prefHeight="26.0" prefWidth="215.0" promptText="XXXXXXXX" />
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" prefHeight="40.0" prefWidth="600.0">
+               <children>
+                  <Label prefHeight="27.0" prefWidth="155.0" text="Curso" textFill="WHITE">
+                     <font>
+                        <Font name="Segoe UI Light" size="18.0" />
+                     </font>
+                  </Label>
+                  <ComboBox fx:id="cmbCurso" prefHeight="26.0" prefWidth="215.0" promptText="Selecione seu curso" visibleRowCount="7" />
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" prefHeight="40.0" prefWidth="600.0">
+               <children>
+                  <Label prefHeight="27.0" prefWidth="155.0" text="Sem. Ingresso" textFill="WHITE">
+                     <font>
+                        <Font name="Segoe UI Light" size="18.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="txtSemIngresso" prefHeight="26.0" prefWidth="215.0" promptText="20XX/X" />
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" prefHeight="40.0" prefWidth="600.0">
+               <children>
+                  <Label prefHeight="27.0" prefWidth="155.0" text="Prev. Formatura" textFill="WHITE">
+                     <font>
+                        <Font name="Segoe UI Light" size="18.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="txtFormatura" prefHeight="26.0" prefWidth="215.0" promptText="20XX" />
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+      <Button id="my-button" fx:id="btnProximo" layoutX="466.0" layoutY="419.0" mnemonicParsing="false" onAction="#clicProximo" prefHeight="34.0" prefWidth="108.0" stylesheets="@../css/btnStyle.css" text="Próximo" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Button>
+      <Label layoutX="255.0" layoutY="29.0" text="Cadastro" textFill="WHITE">
+         <font>
+            <Font name="Segoe UI Light" size="24.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>

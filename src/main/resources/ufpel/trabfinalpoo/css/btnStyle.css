@@ -1,0 +1,12 @@
+#my-button {
+    -fx-background-color: #328B8F;
+}
+
+/* I want MouseMoved button background-color effect */
+#my-button:hover {
+    -fx-background-color: #B59E18;
+}
+
+#my-button:pressed {
+    -fx-background-color: transparent;
+}
