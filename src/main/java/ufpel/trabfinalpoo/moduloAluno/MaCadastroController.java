@@ -2,17 +2,26 @@ package ufpel.trabfinalpoo.moduloAluno;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
+import org.apache.commons.lang3.SerializationUtils;
+import ufpel.trabfinalpoo.Main;
+import ufpel.trabfinalpoo.helperClasses.Messenger;
+import ufpel.trabfinalpoo.helperClasses.SceneManager;
 
+import java.io.*;
 import java.net.URL;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 
 public class MaCadastroController implements Initializable {
 
     @FXML
-    private ComboBox<String> cmbCurso;
+    private ComboBox<Curso> cmbCurso;
     @FXML
     private TextField txtEmail;
     @FXML
@@ -26,60 +35,83 @@ public class MaCadastroController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        cmbCurso.getItems().addAll("Ciência da Computação", "Engenharia da Computação");
+        for (Curso c : Curso.values())
+        {
+            cmbCurso.getItems().add(c);
+        }
     }
 
-    public void clicProximo() {
-        Aluno novAluno = new Aluno();
-
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setHeaderText("Erro de input");
+    // Validação dos inputs do usuário
+    private boolean entradasValidas(Aluno novAluno) {
+        String alertTitle = "Erro de input";
 
         if(!novAluno.setNome(txtNome.getText())) {
-            alert.setContentText("Insira um nome!");
-            alert.showAndWait();
-            return;
+            showErrorAlert(alertTitle, "Insira um nome!");
+            return false;
         }
         if(!novAluno.setEmail(txtEmail.getText())) {
-            alert.setContentText("Email em formato incorreto!");
-            alert.showAndWait();
-            return;
+            showErrorAlert(alertTitle, "Email em formato incorreto!");
+            return false;
         }
         if(!novAluno.setMatricula(txtMatricula.getText())) {
-            alert.setContentText("Matrícula inválida!");
-            alert.showAndWait();
-            return;
+            showErrorAlert(alertTitle, "Matrícula inválida!");
+            return false;
         }
         if(cmbCurso.getSelectionModel().getSelectedIndex() == -1) {
-            alert.setContentText("Selecione um curso!");
-            alert.showAndWait();
-            return;
+            showErrorAlert(alertTitle, "Selecione um curso!");
+            return false;
         }
         else
             novAluno.setCurso(cmbCurso.getValue());
 
         if(!novAluno.setSemIngresso(txtSemIngresso.getText())) {
-            alert.setContentText("Semestre de ingresso inválido!");
-            alert.showAndWait();
-            return;
+            showErrorAlert(alertTitle, "Semestre de ingresso inválido!");
+            return false;
         }
 
         try {
             int anoFormat = Integer.parseInt(txtFormatura.getText());
 
             if(!novAluno.setPrevFormat(anoFormat)) {
-                alert.setContentText("O ano digitado é inválido!");
-                alert.showAndWait();
-                return;
+                showErrorAlert(alertTitle, "O ano digitado é inválido!");
+                return false;
             }
-        } catch (NumberFormatException e) {
-            alert.setContentText("Digite um ano!");
-            alert.showAndWait();
-            return;
+        }
+        catch (NumberFormatException e) {
+            showErrorAlert(alertTitle, "Só são permitidos números!");
+            return false;
         }
 
-        alert.setContentText(novAluno.toString());
-        alert.showAndWait();
+        return true;
+    }
 
+    // Mostra alerta de erro com titulo e conteudo personalizado
+    private void showErrorAlert(String titulo, String contentTxt) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setHeaderText(titulo);
+
+        alert.setContentText(contentTxt);
+        alert.showAndWait();
+    }
+
+    public void clicProximo() {
+        // Cria objeto do aluno
+        Aluno novAluno = new Aluno();
+
+        // Valida os campos de entrada
+        if(!entradasValidas(novAluno))
+            return;
+
+        // Cria um formatador para a data
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        // Salva a data de cadastro do aluno
+        novAluno.setDataCad(dtf.format(LocalDateTime.now()));
+
+        // Envia o objeto do aluno para a classe mensageira (é assim que eu chamo um singleton)
+        Messenger m = Messenger.getInstance();
+        m.queue.add(novAluno);
+
+        // Troca de tela
+        SceneManager.sceneSet(SceneManager.SC_ALUNO_ATIVIDADES);
     }
 }

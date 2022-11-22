@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Rectangle?>
+
+<AnchorPane prefHeight="604.0" prefWidth="531.0" style="-fx-background-color: #1D2D42;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ufpel.trabfinalpoo.moduloAluno.MaChangeProfPicController">
+   <children>
+      <Rectangle fx:id="photo1" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="249.0" layoutX="17.0" layoutY="14.0" onMouseClicked="#setPhoto" stroke="BLACK" strokeType="INSIDE" width="238.0">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></Rectangle>
+      <Rectangle fx:id="photo2" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="249.0" layoutX="276.0" layoutY="14.0" onMouseClicked="#setPhoto" stroke="BLACK" strokeType="INSIDE" width="238.0">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></Rectangle>
+      <Rectangle fx:id="photo4" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="249.0" layoutX="276.0" layoutY="282.0" onMouseClicked="#setPhoto" stroke="BLACK" strokeType="INSIDE" width="238.0">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></Rectangle>
+      <Rectangle fx:id="photo3" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="249.0" layoutX="17.0" layoutY="282.0" onMouseClicked="#setPhoto" stroke="BLACK" strokeType="INSIDE" width="238.0">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></Rectangle>
+   </children>
+</AnchorPane>

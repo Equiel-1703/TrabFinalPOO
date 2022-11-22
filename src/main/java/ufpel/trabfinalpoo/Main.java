@@ -1,22 +1,25 @@
 package ufpel.trabfinalpoo;
 
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
+import javafx.application.HostServices;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import ufpel.trabfinalpoo.helperClasses.SceneManager;
 
-import java.io.IOException;
-
 public class Main extends Application {
 
     // Palco principal do APP
     private static Stage mainStage;
-
+    // Instância da Main
+    private static Main mInstance;
     // Método para retornar o palco do APP
     public static Stage getMainStage() {
         return mainStage;
+    }
+    // Método para retornar instância da Main
+    public static Main getMainInst() {
+        return mInstance;
     }
 
     // Função principal do programa
@@ -29,18 +32,11 @@ public class Main extends Application {
         if(mainStage == null)
             mainStage = stage;
 
-        // Carrega a primeira cena do programa
-        Parent root = null;
+        if(mInstance == null)
+            mInstance = this;
 
-        try
-        {
-            root = FXMLLoader.load(this.getClass().getResource(SceneManager.SC_INICIO));
-        }
-        catch (IOException e)
-        {
-            System.err.println("Não foi encontrado o FXML da primeira cena :(");
-            System.exit(1);
-        }
+        // Carrega a primeira cena do programa
+        Parent root = SceneManager.loadFXML(SceneManager.SC_INICIO);
 
         mainStage.setScene(new Scene(root));
 

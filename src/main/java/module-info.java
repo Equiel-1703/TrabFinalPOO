@@ -2,7 +2,7 @@ module ufpel.trabfinalpoo {
     requires javafx.controls;
     requires javafx.fxml;
     requires opencsv;
-
+    requires org.apache.commons.lang3;
 
     opens ufpel.trabfinalpoo to javafx.fxml;
     opens ufpel.trabfinalpoo.moduloAluno to javafx.fxml;

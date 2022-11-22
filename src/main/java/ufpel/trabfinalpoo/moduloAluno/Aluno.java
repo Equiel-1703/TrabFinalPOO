@@ -1,12 +1,20 @@
 package ufpel.trabfinalpoo.moduloAluno;
 
-class Aluno {
-    protected String nome;
-    protected String email;
-    protected String matricula;
-    protected String curso;
-    protected String semIngresso;
-    protected int prevFormat;
+import java.io.Serializable;
+
+public class Aluno implements Serializable {
+    private String nome;
+    private String email;
+    private String matricula;
+    private Curso curso;
+    private String semIngresso;
+    private int prevFormat;
+    private String iconID;
+    private String dataCad;
+
+    public Aluno() {
+        this.iconID = "default.png";
+    }
 
     // ---------------------------------- Setters ----------------------------------
     public boolean setNome(String nome) {
@@ -39,7 +47,7 @@ class Aluno {
         return false;
     }
 
-    public void setCurso(String curso) {
+    public void setCurso(Curso curso) {
         this.curso = curso;
     }
 
@@ -63,6 +71,14 @@ class Aluno {
         return false;
     }
 
+    public void setIconID(String iconID) {
+        this.iconID = iconID;
+    }
+
+    public void setDataCad(String dataCad) {
+        this.dataCad = dataCad;
+    }
+
     // ---------------------------------- Getters ----------------------------------
 
 
@@ -78,7 +94,7 @@ class Aluno {
         return matricula;
     }
 
-    public String getCurso() {
+    public Curso getCurso() {
         return curso;
     }
 
@@ -90,8 +106,16 @@ class Aluno {
         return prevFormat;
     }
 
+    public String getIconID() {
+        return iconID;
+    }
+
+    public String getDataCad() {
+        return dataCad;
+    }
+
     @Override
     public String toString() {
-        return nome + '\n' + email + '\n' + matricula + '\n' + curso + '\n' + semIngresso + '\n' + prevFormat;
+        return nome + " " + matricula + " <" + email + ">";
     }
 }
