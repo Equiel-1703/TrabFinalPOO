@@ -1,5 +1,7 @@
 package ufpel.trabfinalpoo.moduloAluno;
 
+import ufpel.trabfinalpoo.generalClasses.Atividade;
+import ufpel.trabfinalpoo.generalClasses.AtividadeCadastrada;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
@@ -59,14 +61,14 @@ public class MaAddAtvController implements Initializable {
 
     public void comboChange() {
         Atividade atv = cmbTipoAtv.getValue();
-        String un = atv.unidade;
+        String un = atv.getUnidade();
 
         lblUnits.setText("" + un);
 
         if(!un.equals("Horas"))
-            lblMax.setText("Máx. " + (atv.qtdeMax / atv.qtdeMin));
+            lblMax.setText("Máx. " + (atv.getQtdeMax() / atv.getQtdeMin()));
         else
-            lblMax.setText("Máx. " + atv.qtdeMax);
+            lblMax.setText("Máx. " + atv.getQtdeMax());
     }
 
     private boolean validateATV() {
@@ -86,7 +88,7 @@ public class MaAddAtvController implements Initializable {
                     "Adicione uma descrição. Ex: \"Monitoria de POO\"");
             return false;
         }
-        cadAtv.descAtv = txtDescAtv.getText();
+        cadAtv.setDescAtv(txtDescAtv.getText());
 
         // Valida o link da atividade
         if(!txtLinkPDF.getText().matches("https://drive.google.com/file/.+")) {
@@ -95,7 +97,7 @@ public class MaAddAtvController implements Initializable {
             return false;
         }
         try {
-            cadAtv.linkPDF = new URL(txtLinkPDF.getText());
+            cadAtv.setLinkPDF(new URL(txtLinkPDF.getText()));
         }
         catch (MalformedURLException e) {
             showErrorAlert("Link do PDF", "O seu link é inválido!");
@@ -114,19 +116,20 @@ public class MaAddAtvController implements Initializable {
         }
 
         // Valida as unidades de horas (caso seja desse tipo)
-        if(atv.unidade.equals("Horas"))
+        if(atv.getUnidade().equals("Horas"))
         {
-            if(unidadesDoUsuario < atv.qtdeMin)
+            if(unidadesDoUsuario < atv.getQtdeMin())
             {
                 showErrorAlert("Horas mínimas não atingidas",
-                        "Infelizmente você não atingiu o número de horas mínimas para essa atividade :(");
+                        "Infelizmente você não atingiu o número de horas/semestres mínimos para essa atividade :(\nO mínimo é " +
+                        cadAtv.getQtdeMin());
                 return false;
             }
 
-            cadAtv.qtdeHoras = unidadesDoUsuario % (atv.qtdeMax + 1);
+            cadAtv.setQtdeHoras(Math.min(unidadesDoUsuario, atv.getQtdeMax()));
         }
         else
-            cadAtv.qtdeHoras = (atv.qtdeMin * unidadesDoUsuario) % (atv.qtdeMax + 1);
+            cadAtv.setQtdeHoras(Math.min((atv.getQtdeMin() * unidadesDoUsuario), atv.getQtdeMax()));
 
         return true;
     }

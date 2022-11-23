@@ -5,6 +5,8 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
@@ -15,9 +17,9 @@
    <children>
       <Pane prefHeight="572.0" prefWidth="220.0" style="-fx-background-color: #22354e;">
          <children>
-            <Circle fx:id="profPic" fill="DODGERBLUE" layoutX="110.0" layoutY="89.0" onMouseClicked="#changePic" radius="75.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0">
+            <Circle fx:id="profPic" fill="DODGERBLUE" layoutX="110.0" layoutY="89.0" radius="75.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0">
                <cursor>
-                  <Cursor fx:constant="HAND" />
+                  <Cursor fx:constant="DEFAULT" />
                </cursor></Circle>
             <VBox layoutX="14.0" layoutY="187.0" prefHeight="344.0" prefWidth="196.0" spacing="14.0">
                <children>
@@ -26,28 +28,7 @@
                         <Font name="Segoe UI" size="14.0" />
                      </font>
                   </Label>
-                  <Label fx:id="lblEmail" alignment="CENTER" contentDisplay="CENTER" prefHeight="18.0" prefWidth="196.0" text="email" textAlignment="CENTER" textFill="WHITE">
-                     <font>
-                        <Font name="Segoe UI" size="14.0" />
-                     </font>
-                  </Label>
-                  <Label fx:id="lblMatricula" alignment="CENTER" contentDisplay="CENTER" prefHeight="18.0" prefWidth="196.0" text="Matricula" textAlignment="CENTER" textFill="WHITE">
-                     <font>
-                        <Font name="Segoe UI" size="14.0" />
-                     </font>
-                  </Label>
-                  <Label fx:id="lblCurso" alignment="CENTER" contentDisplay="CENTER" prefHeight="18.0" prefWidth="196.0" text="Curso" textAlignment="CENTER" textFill="WHITE">
-                     <font>
-                        <Font name="Segoe UI" size="14.0" />
-                     </font>
-                  </Label>
-                  <Separator prefWidth="200.0" />
-                  <Label fx:id="lblIngresso" contentDisplay="CENTER" prefHeight="18.0" prefWidth="196.0" text="Ingresso" textFill="WHITE">
-                     <font>
-                        <Font name="Segoe UI" size="14.0" />
-                     </font>
-                  </Label>
-                  <Label fx:id="lblFormatura" contentDisplay="CENTER" prefHeight="18.0" prefWidth="196.0" text="Formatura" textFill="WHITE">
+                  <Label fx:id="lblSIAPE" alignment="CENTER" contentDisplay="CENTER" prefHeight="18.0" prefWidth="196.0" text="Matricula" textAlignment="CENTER" textFill="WHITE">
                      <font>
                         <Font name="Segoe UI" size="14.0" />
                      </font>
@@ -60,23 +41,34 @@
                   </Label>
                </children>
             </VBox>
-            <Label layoutX="57.0" layoutY="531.0" text="Feito por Henrique Rodrigues" textFill="WHITE">
-               <font>
-                  <Font name="Freestyle Script" size="14.0" />
-               </font>
-            </Label>
          </children>
       </Pane>
-      <ListView fx:id="listviewAtvs" layoutX="220.0" prefHeight="572.0" prefWidth="503.0" style="-fx-background-color: #1D2D42;" />
-      <Button id="my-button" layoutX="743.0" layoutY="21.0" mnemonicParsing="false" onAction="#newAtv" prefHeight="26.0" prefWidth="60.0" stylesheets="@../css/btnStyle.css" text="+" textFill="WHITE">
+      <Button id="my-button" layoutX="746.0" layoutY="14.0" mnemonicParsing="false" onAction="#done" prefHeight="26.0" prefWidth="60.0" stylesheets="@../css/btnStyle.css" text="OK" textFill="WHITE">
          <font>
             <Font name="Segoe UI Bold" size="13.0" />
          </font>
       </Button>
-      <Button id="my-button" layoutX="743.0" layoutY="57.0" mnemonicParsing="false" onAction="#done" prefHeight="26.0" prefWidth="60.0" stylesheets="@../css/btnStyle.css" text="OK" textFill="WHITE">
-         <font>
-            <Font name="Segoe UI Bold" size="13.0" />
-         </font>
-      </Button>
+      <TabPane layoutX="220.0" prefHeight="572.0" prefWidth="513.0" stylesheets="@../css/tabsStyle.css" tabClosingPolicy="UNAVAILABLE" tabMinWidth="100.0">
+        <tabs>
+          <Tab closable="false" text="Alunos">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <ListView fx:id="listviewAlunosCadastrados" onMouseClicked="#clicaAluno" prefHeight="546.0" prefWidth="514.0" style="-fx-background-color: #1D2D42;" />
+                     </children>
+                  </AnchorPane>
+            </content>
+          </Tab>
+          <Tab text="Atividades">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <ListView fx:id="listViewAtvsAlunoSelecionado" onKeyPressed="#deselect" prefHeight="544.0" prefWidth="514.0" style="-fx-background-color: #1D2D42;" />
+                     </children>
+                  </AnchorPane>
+            </content>
+          </Tab>
+        </tabs>
+      </TabPane>
    </children>
 </AnchorPane>

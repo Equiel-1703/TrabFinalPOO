@@ -19,7 +19,7 @@
                         <Font name="Segoe UI Light" size="18.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="txtNome" prefHeight="26.0" prefWidth="215.0" promptText="Seu nome" text="Luciana Foss" />
+                  <TextField fx:id="txtNome" prefHeight="26.0" prefWidth="215.0" promptText="Nome do professor" />
                </children>
             </HBox>
             <HBox alignment="CENTER" prefHeight="40.0" prefWidth="600.0">
@@ -29,12 +29,12 @@
                         <Font name="Segoe UI Light" size="18.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="txtSIAPE" prefHeight="26.0" prefWidth="215.0" promptText="XXXXXXXX" text="1234567" />
+                  <TextField fx:id="txtSIAPE" prefHeight="26.0" prefWidth="215.0" promptText="XXXXXXX" />
                </children>
             </HBox>
          </children>
       </VBox>
-      <Button id="my-button" fx:id="btnProximo" layoutX="467.0" layoutY="242.0" mnemonicParsing="false" onAction="#clicProximo" prefHeight="34.0" prefWidth="108.0" stylesheets="@../css/btnStyle.css" text="Próximo" textFill="WHITE">
+      <Button id="my-button" layoutX="467.0" layoutY="242.0" mnemonicParsing="false" onAction="#clicProximo" prefHeight="34.0" prefWidth="108.0" stylesheets="@../css/btnStyle.css" text="Próximo" textFill="WHITE">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>

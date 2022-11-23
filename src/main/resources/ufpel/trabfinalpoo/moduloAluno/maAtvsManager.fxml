@@ -60,11 +60,6 @@
                   </Label>
                </children>
             </VBox>
-            <Label layoutX="57.0" layoutY="531.0" text="Feito por Henrique Rodrigues" textFill="WHITE">
-               <font>
-                  <Font name="Freestyle Script" size="14.0" />
-               </font>
-            </Label>
          </children>
       </Pane>
       <ListView fx:id="listviewAtvs" layoutX="220.0" prefHeight="572.0" prefWidth="503.0" style="-fx-background-color: #1D2D42;" />

@@ -1,0 +1,16 @@
+.tab {
+    -fx-background-color: #22354e;
+    -fx-text-base-color: white;
+}
+
+.tab:hover {
+    -fx-background: #B59E18;
+}
+
+.tab:selected {
+    -fx-background: transparent;
+}
+
+.tab-header-background {
+    -fx-background-color: #1D2D42;
+}

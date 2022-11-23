@@ -1,6 +1,8 @@
 package ufpel.trabfinalpoo.moduloAluno;
 
 import com.opencsv.CSVWriter;
+import ufpel.trabfinalpoo.generalClasses.Aluno;
+import ufpel.trabfinalpoo.generalClasses.AtividadeCadastrada;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -19,7 +21,8 @@ import javafx.util.Callback;
 import org.apache.commons.lang3.SerializationUtils;
 import ufpel.trabfinalpoo.Main;
 import ufpel.trabfinalpoo.helperClasses.CSVManager;
-import ufpel.trabfinalpoo.helperClasses.CellFactoryAtvAluno;
+import ufpel.trabfinalpoo.cellfactories.CellFactoryAtvAluno;
+import ufpel.trabfinalpoo.helperClasses.FilesManager;
 import ufpel.trabfinalpoo.helperClasses.Messenger;
 import ufpel.trabfinalpoo.helperClasses.SceneManager;
 
@@ -154,7 +157,7 @@ public class MaAtvsManagerController implements Initializable {
         /* Salva os dados do aluno em um .data */
 
         // Nome do arquivo de saída
-        String alunoDataFile = "./dados/" + aluno.getNome().toUpperCase() + "_" + aluno.getMatricula() + ".data";
+        String alunoDataFile = FilesManager.PATH_TO_SAVE_DATA_SEP + aluno.getNome().toUpperCase() + "_" + aluno.getMatricula() + ".data";
 
         // Cria stream de saída de dados
         FileOutputStream fOut = new FileOutputStream(alunoDataFile);

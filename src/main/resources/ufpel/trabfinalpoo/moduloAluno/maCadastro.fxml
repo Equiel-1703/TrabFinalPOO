@@ -20,7 +20,7 @@
                         <Font name="Segoe UI Light" size="18.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="txtNome" prefHeight="26.0" prefWidth="215.0" promptText="Seu nome" text="Mia Khaliffa" />
+                  <TextField fx:id="txtNome" prefHeight="26.0" prefWidth="215.0" promptText="Seu nome" />
                </children>
             </HBox>
             <HBox alignment="CENTER" prefHeight="40.0" prefWidth="600.0">
@@ -30,7 +30,7 @@
                         <Font name="Segoe UI Light" size="18.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="txtEmail" prefHeight="26.0" prefWidth="215.0" promptText="**********@inf.ufpel.edu.br" text="mia@inf.ufpel.edu.br" />
+                  <TextField fx:id="txtEmail" prefHeight="26.0" prefWidth="215.0" text="**********@inf.ufpel.edu.br" />
                </children>
             </HBox>
             <HBox alignment="CENTER" prefHeight="40.0" prefWidth="600.0">
@@ -40,7 +40,7 @@
                         <Font name="Segoe UI Light" size="18.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="txtMatricula" prefHeight="26.0" prefWidth="215.0" promptText="XXXXXXXX" text="12345678" />
+                  <TextField fx:id="txtMatricula" prefHeight="26.0" prefWidth="215.0" promptText="XXXXXXXX" />
                </children>
             </HBox>
             <HBox alignment="CENTER" prefHeight="40.0" prefWidth="600.0">
@@ -60,7 +60,7 @@
                         <Font name="Segoe UI Light" size="18.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="txtSemIngresso" prefHeight="26.0" prefWidth="215.0" promptText="20XX/X" text="2020/1" />
+                  <TextField fx:id="txtSemIngresso" prefHeight="26.0" prefWidth="215.0" promptText="20XX/X" />
                </children>
             </HBox>
             <HBox alignment="CENTER" prefHeight="40.0" prefWidth="600.0">
@@ -70,7 +70,7 @@
                         <Font name="Segoe UI Light" size="18.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="txtFormatura" prefHeight="26.0" prefWidth="215.0" promptText="20XX" text="2050" />
+                  <TextField fx:id="txtFormatura" prefHeight="26.0" prefWidth="215.0" promptText="20XX" />
                </children>
             </HBox>
          </children>

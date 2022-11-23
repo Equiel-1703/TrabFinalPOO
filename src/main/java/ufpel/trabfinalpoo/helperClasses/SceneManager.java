@@ -15,6 +15,10 @@ public final class SceneManager {
     public static final String SC_ALUNO_ADD_ATV = "moduloAluno/maAddAtv.fxml";
     public static final String SC_ALUNO_CHNG_PIC = "moduloAluno/maChangeProfPic.fxml";
     public static final String SC_ALUNO_SHOW_ATV = "moduloAluno/maShowAtv.fxml";
+    public static final String SC_PROFESSOR_CADASTRO = "moduloProfessor/mpCadastro.fxml";
+    public static final String SC_PROFESSOR_LOGIN = "moduloProfessor/mpLogin.fxml";
+    public static final String SC_PROFESSOR_ATIVIDADES = "moduloProfessor/mpAtvsManager.fxml";
+    public static final String SC_PROFESSOR_ACEITA_REJEITA = "moduloProfessor/mpApproveAtv.fxml";
 
     // Garantir que a classe não será instanciada
     private SceneManager() {}
@@ -27,7 +31,8 @@ public final class SceneManager {
             root = FXMLLoader.load(Main.class.getResource(sceneFXMLPath));
         }
         catch (Exception e) {
-            System.err.println("FXML \"" + sceneFXMLPath + "\" não encontrado.");
+            System.err.println("O FXML \"" + sceneFXMLPath + "\" não pôde ser carregado.");
+            System.err.println(e.toString());
             System.exit(0);
         }
 
@@ -38,6 +43,7 @@ public final class SceneManager {
         mainSt.centerOnScreen();
     }
 
+    // Carrega um FXML para abrir um novo stage (retorna como Parent)
     public static Parent loadFXML(String sceneFXMLPath) {
         Parent root = null;
 
@@ -45,7 +51,7 @@ public final class SceneManager {
             root = FXMLLoader.load(Main.class.getResource(sceneFXMLPath));
         }
         catch (Exception e) {
-            System.err.println("FXML \"" + sceneFXMLPath + "\" não encontrado.");
+            System.err.println("O FXML \"" + sceneFXMLPath + "\" não pôde ser carregado.");
             System.exit(0);
         }
 

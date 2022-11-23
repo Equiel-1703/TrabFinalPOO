@@ -4,23 +4,24 @@
 <?import javafx.scene.control.Hyperlink?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="299.0" prefWidth="393.0" style="-fx-background-color: #1D2D42;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ufpel.trabfinalpoo.moduloAluno.MaShowAtvController">
+<AnchorPane prefHeight="316.0" prefWidth="393.0" style="-fx-background-color: #1D2D42;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ufpel.trabfinalpoo.moduloAluno.MaShowAtvController">
    <children>
-      <Button id="my-button" layoutX="312.0" layoutY="248.0" mnemonicParsing="false" onAction="#fecharViewer" prefHeight="30.0" prefWidth="62.0" stylesheets="@../css/btnStyle.css" text="Fechar" textFill="WHITE">
+      <Button id="my-button" layoutX="302.0" layoutY="259.0" mnemonicParsing="false" onAction="#fecharViewer" prefHeight="30.0" prefWidth="62.0" stylesheets="@../css/btnStyle.css" text="Fechar" textFill="WHITE">
          <font>
             <Font name="Segoe UI Bold" size="12.0" />
          </font>
       </Button>
-      <Hyperlink fx:id="urlPDFLink" layoutX="40.0" layoutY="251.0" onAction="#linkClick" text="Link PDF" />
-      <Label fx:id="lblCodAndTipo" layoutX="40.0" layoutY="45.0" text="cod + tipo" textFill="WHITE">
+      <Hyperlink fx:id="urlPDFLink" layoutX="27.0" layoutY="262.0" onAction="#linkClick" text="Link PDF" />
+      <Label fx:id="lblCodAndTipo" layoutX="40.0" layoutY="48.0" text="cod + tipo" textFill="WHITE">
          <font>
             <Font name="Segoe UI Light" size="14.0" />
          </font>
       </Label>
-      <Label fx:id="lblQtdeHoras" layoutX="38.0" layoutY="80.0" text="qtde Horas" textFill="WHITE">
+      <Label fx:id="lblQtdeHoras" layoutX="38.0" layoutY="83.0" text="qtde Horas" textFill="WHITE">
          <font>
             <Font name="Segoe UI Light" size="14.0" />
          </font>
@@ -30,11 +31,6 @@
             <Font name="Segoe UI Bold" size="14.0" />
          </font>
       </Label>
-      <Label fx:id="lblDesc" layoutX="38.0" layoutY="152.0" text="qtde Horas" textFill="WHITE">
-         <font>
-            <Font name="Segoe UI Light" size="14.0" />
-         </font>
-      </Label>
       <Label layoutX="39.0" layoutY="16.0" text="Atividade" textFill="WHITE">
          <font>
             <Font name="Segoe UI Bold" size="14.0" />
@@ -42,5 +38,9 @@
       </Label>
       <Separator layoutX="27.0" layoutY="39.0" prefHeight="3.0" prefWidth="338.0" />
       <Separator layoutX="27.0" layoutY="145.0" prefHeight="3.0" prefWidth="338.0" />
+      <TextArea fx:id="txtareaDesc" editable="false" layoutX="28.0" layoutY="158.0" prefHeight="82.0" prefWidth="338.0" wrapText="true">
+         <font>
+            <Font name="Segoe UI" size="14.0" />
+         </font></TextArea>
    </children>
 </AnchorPane>

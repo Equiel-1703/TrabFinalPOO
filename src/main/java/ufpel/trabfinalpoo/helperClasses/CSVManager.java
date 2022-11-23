@@ -4,7 +4,7 @@ import com.opencsv.CSVParserBuilder;
 import com.opencsv.CSVReader;
 import com.opencsv.CSVReaderBuilder;
 import com.opencsv.CSVWriter;
-import ufpel.trabfinalpoo.moduloAluno.Aluno;
+import ufpel.trabfinalpoo.generalClasses.Aluno;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -12,13 +12,12 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
 
-public final class CSVManager {
+public final class CSVManager extends FilesManager {
 
-    public static final String CSV_ATV_CIENCIA = "./csvs/atvs_cComp.csv";
-    public static final String CSV_ATV_ENG = "./csvs/atvs_engComp.csv";
+    public static final String CSV_ATV_CIENCIA = "csvs/atvs_cComp.csv";
+    public static final String CSV_ATV_ENG = "csvs/atvs_engComp.csv";
 
-    private static final String PATH_TO_SAVE = "./dados/";
-    private static final String[] DATA_CSV_HEADER = {"Código", "Tipo Atv.", "Unidade", "Qtde Min", "Qtde Max", "Link PDF", "Descrição", "Qtde Horas"};
+    private static final String[] DATA_CSV_HEADER = {"Código", "Tipo Atv.", "Unidade", "Qtde Min", "Qtde Max", "Link PDF", "Descrição", "Qtde Horas", "Estado de Aprovação", "Justificativa"};
 
     public static List<String[]> readCSV(String path, char delim) throws IOException {
         // Cria o leitor de CSV
@@ -44,7 +43,7 @@ public final class CSVManager {
     }
 
     public static CSVWriter writeCSVSetup(Aluno aluno) throws IOException {
-        FileWriter outFile = new FileWriter(PATH_TO_SAVE + aluno.getNome().toUpperCase() + "_" + aluno.getMatricula() + ".csv");
+        FileWriter outFile = new FileWriter(PATH_TO_SAVE_DATA_SEP + aluno.getNome().toUpperCase() + "_" + aluno.getMatricula() + ".csv");
         CSVWriter csvWriter = new CSVWriter(outFile, ';', '"', '\\', "\n");
 
         csvWriter.writeNext(DATA_CSV_HEADER);

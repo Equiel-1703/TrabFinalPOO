@@ -18,11 +18,11 @@ public class selecModuleController {
     }
 
     public void souProfessorEntrar(ActionEvent event) {
-
+        SceneManager.sceneSet(SceneManager.SC_PROFESSOR_LOGIN);
     }
 
     @FXML
     void souProfessorCadastrar(ActionEvent event) {
-
+        SceneManager.sceneSet(SceneManager.SC_PROFESSOR_CADASTRO);
     }
 }

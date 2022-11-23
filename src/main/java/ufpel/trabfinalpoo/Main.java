@@ -1,7 +1,6 @@
 package ufpel.trabfinalpoo;
 
 import javafx.application.Application;
-import javafx.application.HostServices;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;

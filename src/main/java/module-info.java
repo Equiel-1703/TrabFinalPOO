@@ -6,9 +6,15 @@ module ufpel.trabfinalpoo {
 
     opens ufpel.trabfinalpoo to javafx.fxml;
     opens ufpel.trabfinalpoo.moduloAluno to javafx.fxml;
+    opens ufpel.trabfinalpoo.moduloProfessor to javafx.fxml;
+    opens ufpel.trabfinalpoo.firstScene to javafx.fxml;
+    opens ufpel.trabfinalpoo.generalClasses to javafx.fxml;
+    opens ufpel.trabfinalpoo.helperClasses to javafx.fxml;
+
     exports ufpel.trabfinalpoo;
     exports ufpel.trabfinalpoo.helperClasses;
-    opens ufpel.trabfinalpoo.helperClasses to javafx.fxml;
     exports ufpel.trabfinalpoo.firstScene;
-    opens ufpel.trabfinalpoo.firstScene to javafx.fxml;
+    exports ufpel.trabfinalpoo.generalClasses;
+    exports ufpel.trabfinalpoo.cellfactories;
+    opens ufpel.trabfinalpoo.cellfactories to javafx.fxml;
 }

@@ -1,226 +1,175 @@
 package ufpel.trabfinalpoo.moduloProfessor;
 
 import com.opencsv.CSVWriter;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.image.Image;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
 import javafx.util.Callback;
 import org.apache.commons.lang3.SerializationUtils;
 import ufpel.trabfinalpoo.Main;
-import ufpel.trabfinalpoo.helperClasses.CSVManager;
-import ufpel.trabfinalpoo.helperClasses.CellFactoryAtvAluno;
-import ufpel.trabfinalpoo.helperClasses.Messenger;
-import ufpel.trabfinalpoo.helperClasses.SceneManager;
-import ufpel.trabfinalpoo.moduloAluno.Aluno;
-import ufpel.trabfinalpoo.moduloAluno.AtividadeCadastrada;
+import ufpel.trabfinalpoo.cellfactories.CellFactoryAtvProf;
+import ufpel.trabfinalpoo.generalClasses.Aluno;
+import ufpel.trabfinalpoo.generalClasses.AtividadeCadastrada;
+import ufpel.trabfinalpoo.generalClasses.Professor;
+import ufpel.trabfinalpoo.helperClasses.*;
 
-import java.io.DataOutputStream;
-import java.io.FileOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.ResourceBundle;
+import java.util.*;
 
 public class MpAtvsManagerController implements Initializable {
 
     @FXML
-    private Circle profPic;
-    @FXML
-    private Label lblCurso;
-    @FXML
     private Label lblDtCad;
-    @FXML
-    private Label lblEmail;
-    @FXML
-    private Label lblFormatura;
-    @FXML
-    private Label lblIngresso;
-    @FXML
-    private Label lblMatricula;
     @FXML
     private Label lblNome;
     @FXML
-    private ListView<AtividadeCadastrada> listviewAtvs;
+    private Label lblSIAPE;
+    @FXML
+    private Circle profPic;
+    @FXML
+    private ListView<AtividadeCadastrada> listViewAtvsAlunoSelecionado;
+    @FXML
+    private ListView<Aluno> listviewAlunosCadastrados;
 
-    private Aluno aluno;
-    private List<String[]> listTiposAtividades;
+    private Professor professor;
+    private List<Aluno> alunosCadastrados;
+    private Map<String, List<AtividadeCadastrada>> atvsAlunoMap;
+    private Aluno currentSelectedAluno;
+    private Aluno lastSelectedAluno;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         // Pega instância do mensageiro
         Messenger m = Messenger.getInstance();
 
-        // Pega o objeto do aluno que estará no mensageiro
+        // Pega o objeto do professor que estará no mensageiro
         try {
-            aluno = (Aluno)m.queue.remove();
+            professor = (Professor) m.queue.remove();
 
-            // Verifica se recebeu a lista de atividades já cadastradas do aluno
-            if(!m.queue.isEmpty())
-            {
-                List<AtividadeCadastrada> cadLs = (List<AtividadeCadastrada>) m.queue.remove();
-
-                ObservableList<AtividadeCadastrada> ls = FXCollections.observableList(cadLs);
-                listviewAtvs.setItems(ls);
-            }
         }
         catch (NoSuchElementException e) {
             System.err.println("O singleton que troca informações entre as cenas por " +
-                    "algum motivo chegou vazio na tela de atividades.");
+                    "algum motivo chegou vazio na tela de atividades do professor.");
 
             System.exit(1);
         }
 
-        // Carrega a imagem do aluno
-        loadImg();
+        // Carrega fotinha do professor
+        String fotoPath = Main.class.getResource("moduloProfessor/prof.jpg").toString();
+        Image pic = new Image(fotoPath);
+        profPic.setFill(new ImagePattern(pic));
 
         // Preenche os labels
-        lblNome.setText(aluno.getNome());
-        lblEmail.setText(aluno.getEmail());
-        lblMatricula.setText(aluno.getMatricula());
-        lblCurso.setText(aluno.getCurso().toString());
-        lblIngresso.setText("Ingresso: " + aluno.getSemIngresso());
-        lblFormatura.setText("Prev. formatura: " + aluno.getPrevFormat());
-        lblDtCad.setText("Dt. Cadastro: " + aluno.getDataCad());
+        lblNome.setText(professor.getNome());
+        lblSIAPE.setText(professor.getSIAPE());
+        lblDtCad.setText("Dt. Cadastro: " + professor.getDataCad());
 
-        // Inicializa a lista que vai guardar os dados do CSV das possíveis atividades a serem
-        // cadastradas. Esse parte do código ficava em outro controlador, porém esse objeto seria
-        // recriado e recarregado muitas vezes, valendo mais a pena colocá-lo aqui e carregar uma vez só.
-        listTiposAtividades = new ArrayList<>();
+        /* Cria a lista de alunos cadastrados e suas respectivas atividades */
+        alunosCadastrados = new LinkedList<>();
+        atvsAlunoMap = new HashMap<>();
 
-        String csvPath = null;
-        switch (aluno.getCurso())
+        String[] dataFiles = GetFilesWithExtension.getAllFilesWithCertainExtension(new File(FilesManager.PATH_TO_SAVE_DATA), ".data");
+
+        if(dataFiles.length > 0)
         {
-            case CCOMP:
-                csvPath = CSVManager.CSV_ATV_CIENCIA;
-                break;
+            try {
+                for (String dataAluno : dataFiles) {
+                    // Determina o nome do csv que deve existir para esse arquivo .data
+                    String nomeCSVCorrespontente = dataAluno.replace(".data", ".csv");
+                    // Cria um objeto de arquivo associado para o csv
+                    File CSVCorrespondente = new File(FilesManager.PATH_TO_SAVE_DATA_SEP + nomeCSVCorrespontente);
 
-            case ENGCOMP:
-                csvPath = CSVManager.CSV_ATV_ENG;
-                break;
+                    // Verifica se o csv existe
+                    if (CSVCorrespondente.exists())
+                    {
+                        // Se sim, lê o .data do aluno
+                        FileInputStream alunoData = new FileInputStream(new File(FilesManager.PATH_TO_SAVE_DATA_SEP + dataAluno));
+                        Aluno alunoDeserialized = SerializationUtils.deserialize(alunoData);
+
+                        // Adiciona o aluno na lista
+                        alunosCadastrados.add(alunoDeserialized);
+
+                        // Carrega as atividades desse aluno
+                        List<String[]> csvAtvsAlunoSTR = CSVManager.readCSV(FilesManager.PATH_TO_SAVE_DATA_SEP + nomeCSVCorrespontente, ';');
+
+                        // Associa uma chave num hashmap para as atividades desse aluno
+                        atvsAlunoMap.put(alunoDeserialized.getNome(), AtividadeCadastrada.convertToAtvCadList(csvAtvsAlunoSTR));
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                System.err.println("Um dos arquivos .data não pôde ser carregado.");
+                System.err.println(e.toString());
+                System.exit(1);
+            }
         }
 
-        try {
-            listTiposAtividades.addAll(CSVManager.readCSV(csvPath, ';'));
-        }
-        catch (IOException e) {
-            System.err.println(e.toString());
-            System.exit(1);
-        }
+        // Adiciona os alunos validados na listView
+        listviewAlunosCadastrados.getItems().addAll(alunosCadastrados);
 
-        // Configura como as células da lista vão se comportar
-        listviewAtvs.setCellFactory(new Callback<ListView<AtividadeCadastrada>, ListCell<AtividadeCadastrada>>() {
+        /* Configura o callback das células da aba de confirmação/rejeição das atividades */
+        listViewAtvsAlunoSelecionado.setCellFactory(new Callback<ListView<AtividadeCadastrada>, ListCell<AtividadeCadastrada>>() {
             @Override
             public ListCell<AtividadeCadastrada> call(ListView<AtividadeCadastrada> atividadeCadastradaListView) {
-                return new CellFactoryAtvAluno();
+                return new CellFactoryAtvProf();
             }
         });
-    }
 
-    public void newAtv(ActionEvent event) {
-        Stage stage = new Stage();
-
-        Messenger m = Messenger.getInstance();
-        // Envia pelo mensageiro o novo Stage
-        m.queue.add(stage);
-        // Envia a lista de possíveis atividades
-        m.queue.add(listTiposAtividades);
-
-        stage.setScene(new Scene(SceneManager.loadFXML(SceneManager.SC_ALUNO_ADD_ATV)));
-        stage.setTitle("Adicionar Atividade");
-        stage.setResizable(false);
-        stage.initModality(Modality.APPLICATION_MODAL);
-        stage.showAndWait();
-
-        // Adiciona a atividade na lista (se o usuário não clicou em fechar)
-        if(!m.queue.isEmpty())
-        {
-            AtividadeCadastrada cadAtv = (AtividadeCadastrada) m.queue.remove();
-            listviewAtvs.getItems().add(cadAtv);
-        }
     }
 
     public void done(ActionEvent event) throws IOException {
-        /* Salva os dados do aluno em um .data */
+        /* Salva as alterações no csv */
+        if(currentSelectedAluno != null) {
+            CSVWriter csvWriter = null;
 
-        // Nome do arquivo de saída
-        String alunoDataFile = "./dados/" + aluno.getNome().toUpperCase() + "_" + aluno.getMatricula() + ".data";
+            try {
+                csvWriter = CSVManager.writeCSVSetup(currentSelectedAluno);
+            } catch (IOException e) {
+                System.err.println(e.toString());
+                System.exit(1);
+            }
 
-        // Cria stream de saída de dados
-        FileOutputStream fOut = new FileOutputStream(alunoDataFile);
-        DataOutputStream datOut = new DataOutputStream(fOut);
+            for (AtividadeCadastrada cadAtv : atvsAlunoMap.get(currentSelectedAluno.getNome())) {
+                csvWriter.writeNext(cadAtv.toStringArray());
+            }
 
-        // Escreve o objeto do novo aluno em um arquivo binário
-        datOut.flush();
-        datOut.write(SerializationUtils.serialize(aluno));
-
-        // Fecha as streams
-        fOut.close();
-        datOut.close();
-
-        /* Salva as atividades do aluno em um .csv */
-
-        CSVWriter csvWriter = null;
-
-        try {
-            csvWriter = CSVManager.writeCSVSetup(aluno);
-        }
-        catch (IOException e) {
-            System.err.println(e.toString());
-            System.exit(1);
-        }
-
-        for (AtividadeCadastrada cadAtv : listviewAtvs.getItems())
-        {
-            csvWriter.writeNext(cadAtv.toStringArray());
-        }
-
-        try {
-            csvWriter.close();
-        }
-        catch (IOException e) {
-            System.err.println(e.toString());
-            System.exit(1);
+            try {
+                csvWriter.close();
+            } catch (IOException e) {
+                System.err.println(e.toString());
+                System.exit(1);
+            }
         }
 
         SceneManager.sceneSet(SceneManager.SC_INICIO);
     }
 
-    public void changePic() {
-        Stage stage = new Stage();
+    public void clicaAluno() {
+        currentSelectedAluno = listviewAlunosCadastrados.getSelectionModel().getSelectedItem();
 
-        Messenger m = Messenger.getInstance();
-        // Envia pelo mensageiro o novo Stage
-        m.queue.add(stage);
-
-        stage.setScene(new Scene(SceneManager.loadFXML(SceneManager.SC_ALUNO_CHNG_PIC)));
-        stage.setTitle("Mudar foto");
-        stage.setResizable(false);
-        stage.initModality(Modality.APPLICATION_MODAL);
-        stage.showAndWait();
-
-        // Carrega a imagem do aluno (se ele alterou)
-        if(!m.queue.isEmpty()){
-            aluno.setIconID((String) m.queue.remove());
-            loadImg();
+        if (lastSelectedAluno != currentSelectedAluno){
+            listViewAtvsAlunoSelecionado.getItems().setAll(atvsAlunoMap.get(currentSelectedAluno.getNome()));
         }
+
+        lastSelectedAluno = currentSelectedAluno;
     }
 
-    private void loadImg() {
-        String s = Main.class.getResource("moduloAluno/profPics/" + aluno.getIconID()).toString();
-        Image pic = new Image(s);
-        profPic.setFill(new ImagePattern(pic));
+    public void deselect(KeyEvent event) {
+        if(event.getCode() == KeyCode.ESCAPE)
+        {
+            listViewAtvsAlunoSelecionado.getSelectionModel().clearSelection();
+        }
     }
 }

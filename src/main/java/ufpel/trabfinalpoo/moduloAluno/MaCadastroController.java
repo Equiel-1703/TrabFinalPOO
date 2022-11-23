@@ -1,24 +1,22 @@
 package ufpel.trabfinalpoo.moduloAluno;
 
+import ufpel.trabfinalpoo.generalClasses.Aluno;
+import ufpel.trabfinalpoo.generalClasses.BackToHome;
+import ufpel.trabfinalpoo.generalClasses.Curso;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
-import javafx.stage.Stage;
-import org.apache.commons.lang3.SerializationUtils;
-import ufpel.trabfinalpoo.Main;
 import ufpel.trabfinalpoo.helperClasses.Messenger;
 import ufpel.trabfinalpoo.helperClasses.SceneManager;
 
-import java.io.*;
 import java.net.URL;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 
-public class MaCadastroController implements Initializable {
+public class MaCadastroController extends BackToHome implements Initializable {
 
     @FXML
     private ComboBox<Curso> cmbCurso;

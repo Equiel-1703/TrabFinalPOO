@@ -1,13 +1,13 @@
 package ufpel.trabfinalpoo.moduloAluno;
 
+import ufpel.trabfinalpoo.generalClasses.Aluno;
+import ufpel.trabfinalpoo.generalClasses.AtividadeCadastrada;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ComboBox;
 import org.apache.commons.lang3.SerializationUtils;
-import ufpel.trabfinalpoo.helperClasses.CSVManager;
-import ufpel.trabfinalpoo.helperClasses.GetFilesWithExtension;
-import ufpel.trabfinalpoo.helperClasses.Messenger;
-import ufpel.trabfinalpoo.helperClasses.SceneManager;
+import ufpel.trabfinalpoo.generalClasses.BackToHome;
+import ufpel.trabfinalpoo.helperClasses.*;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -18,32 +18,28 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class MaLoginController implements Initializable {
+public class MaLoginController extends BackToHome implements Initializable {
 
     @FXML
     private ComboBox<Aluno> cmbAlunoLogin;
 
-    private final String PATH_TO_FILES = "./dados";
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        String[] files = GetFilesWithExtension.getAllFilesWithCertainExtension(new File(PATH_TO_FILES), "data");
+        String[] files = GetFilesWithExtension.getAllFilesWithCertainExtension(new File(FilesManager.PATH_TO_SAVE_DATA), ".data");
         List<Aluno> alunos = new LinkedList<>();
 
-        try {
-            for(String s : files)
-            {
-                FileInputStream alunoData = null;
+        if(files != null) {
+            try {
+                for (String s : files) {
+                    FileInputStream alunoData = new FileInputStream(FilesManager.PATH_TO_SAVE_DATA_SEP + s);
 
-                alunoData = new FileInputStream(new File(PATH_TO_FILES + "/" + s));
-
-                alunos.add(SerializationUtils.deserialize(alunoData));
+                    alunos.add(SerializationUtils.deserialize(alunoData));
+                }
+            } catch (FileNotFoundException e) {
+                System.err.println("Um dos arquivos .data não pôde ser lido.");
+                System.err.println(e.toString());
+                System.exit(1);
             }
-        }
-        catch (FileNotFoundException e) {
-            System.err.println("Um dos arquivos .data não pôde ser lido.");
-            System.err.println(e.toString());
-            System.exit(1);
         }
 
         // Adiciona todos os alunos na combobox
@@ -53,13 +49,16 @@ public class MaLoginController implements Initializable {
     public void entrar() throws IOException {
         Aluno selectedAluno = cmbAlunoLogin.getValue();
 
+        if(selectedAluno == null)
+            return;
+
         // Envia o aluno selecionado para o mensageiro
         Messenger m = Messenger.getInstance();
         m.queue.add(selectedAluno);
 
         // Cria o nome
         String nomeCSVdoAluno = selectedAluno.getNome().toUpperCase()+"_"+selectedAluno.getMatricula()+".csv";
-        String pathToCSVdoAluno = PATH_TO_FILES + System.getProperty("file.separator") + nomeCSVdoAluno;
+        String pathToCSVdoAluno = FilesManager.PATH_TO_SAVE_DATA_SEP + nomeCSVdoAluno;
 
         File csvAluno = new File(pathToCSVdoAluno);
 
@@ -70,7 +69,7 @@ public class MaLoginController implements Initializable {
             List<String[]> atividades = CSVManager.readCSV(pathToCSVdoAluno, ';');
 
             // Converte a lista de arrays de strings para uma lista de atividades cadastradas
-            List<AtividadeCadastrada> cadList = AtividadeCadastrada.convertToAtvCad(atividades);
+            List<AtividadeCadastrada> cadList = AtividadeCadastrada.convertToAtvCadList(atividades);
 
             // Envia essa lista para o mensageiro
             m.queue.add(cadList);

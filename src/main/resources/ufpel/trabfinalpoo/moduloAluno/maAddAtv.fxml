@@ -18,13 +18,13 @@
                   <Font name="Segoe UI Light" size="14.0" />
                </font>
             </Label>
-            <TextField fx:id="txtDescAtv" text="Monitoria de Picas Discretas" />
+            <TextField fx:id="txtDescAtv" />
             <Label text="Link para o comprovante (Google Drive)" textFill="WHITE">
                <font>
                   <Font name="Segoe UI Light" size="14.0" />
                </font>
             </Label>
-            <TextField fx:id="txtLinkPDF" text="https://drive.google.com/file/d/1BVrX" />
+            <TextField fx:id="txtLinkPDF" />
             <AnchorPane prefHeight="65.0" prefWidth="475.0">
                <children>
                   <Label fx:id="lblUnits" alignment="CENTER" contentDisplay="CENTER" layoutY="4.0" text="Unidades" textFill="WHITE">
@@ -37,7 +37,7 @@
                         <Font name="Segoe UI Light" size="14.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="txtUnits" layoutY="29.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="26.0" prefWidth="208.0" text="1" />
+                  <TextField fx:id="txtUnits" layoutY="29.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="26.0" prefWidth="208.0" />
                   <Button id="my-button" layoutX="400.0" layoutY="25.0" mnemonicParsing="false" onAction="#createAtv" prefHeight="33.0" prefWidth="74.0" stylesheets="@../css/btnStyle.css" text="OK" textFill="WHITE">
                      <font>
                         <Font name="Segoe UI Bold" size="12.0" />
