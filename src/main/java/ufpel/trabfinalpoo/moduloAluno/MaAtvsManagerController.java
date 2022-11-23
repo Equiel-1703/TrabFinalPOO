@@ -153,6 +153,13 @@ public class MaAtvsManagerController implements Initializable {
         }
     }
 
+    public void removeAtv() {
+        AtividadeCadastrada selectedAtv = listviewAtvs.getSelectionModel().getSelectedItem();
+
+        if(selectedAtv != null)
+            listviewAtvs.getItems().remove(selectedAtv);
+    }
+
     public void done(ActionEvent event) throws IOException {
         /* Salva os dados do aluno em um .data */
 

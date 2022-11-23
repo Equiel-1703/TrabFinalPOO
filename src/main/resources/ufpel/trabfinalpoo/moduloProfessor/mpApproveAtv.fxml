@@ -62,7 +62,7 @@
                   <ToggleGroup fx:id="aprovacao" />
                </toggleGroup>
             </RadioButton>
-            <RadioButton mnemonicParsing="false" text="REPROVAR" textFill="WHITE" toggleGroup="$aprovacao" />
+            <RadioButton fx:id="radButReprovar" mnemonicParsing="false" text="REPROVAR" textFill="WHITE" toggleGroup="$aprovacao" />
          </children>
       </HBox>
       <Label layoutX="27.0" layoutY="392.0" text="Justificativa:" textFill="WHITE">

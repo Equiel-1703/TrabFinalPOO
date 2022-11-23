@@ -30,6 +30,8 @@ public class MpApproveAtvController implements Initializable {
     @FXML
     private RadioButton radButAceitar;
     @FXML
+    private RadioButton radButReprovar;
+    @FXML
     private TextArea txtareaJustificativa;
 
     private AtividadeCadastrada cadAtv;
@@ -39,6 +41,7 @@ public class MpApproveAtvController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         Messenger m = Messenger.getInstance();
 
+        // Salva o palco atual e a atividade que recebeu pelo messenger
         currentStage = (Stage) m.queue.remove();
         cadAtv = (AtividadeCadastrada) m.queue.remove();
 
@@ -46,6 +49,19 @@ public class MpApproveAtvController implements Initializable {
         lblQtdeHoras.setText("Sua quantidade de horas: " + cadAtv.getQtdeHoras());
         txtareaDesc.setText(cadAtv.getDescAtv());
         txtareaJustificativa.setText(cadAtv.getJustificativa());
+
+        switch (cadAtv.getEstadoAprovacao())
+        {
+            case REJECTED:
+                radButAceitar.setSelected(false);
+                radButReprovar.setSelected(true);
+                break;
+
+            default:
+                radButAceitar.setSelected(true);
+                radButReprovar.setSelected(false);
+                break;
+        }
 
         // Precisamos colocar dentro de um runLater pois não é possível pegar o
         // ScrollPane no initialize. Isso é preciso para arrumar o bug do javaFX

@@ -10,6 +10,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 public final class CSVManager extends FilesManager {
@@ -23,7 +24,7 @@ public final class CSVManager extends FilesManager {
         // Cria o leitor de CSV
         CSVReader csvReader = null;
         try {
-            csvReader = new CSVReaderBuilder(new FileReader(path))
+            csvReader = new CSVReaderBuilder(new FileReader(path, StandardCharsets.UTF_8))
                     .withSkipLines(1) // Ignora o cabeçalho
                     .withCSVParser(new CSVParserBuilder().withSeparator(delim).build())
                     .build();
@@ -43,7 +44,7 @@ public final class CSVManager extends FilesManager {
     }
 
     public static CSVWriter writeCSVSetup(Aluno aluno) throws IOException {
-        FileWriter outFile = new FileWriter(PATH_TO_SAVE_DATA_SEP + aluno.getNome().toUpperCase() + "_" + aluno.getMatricula() + ".csv");
+        FileWriter outFile = new FileWriter(PATH_TO_SAVE_DATA_SEP + aluno.getNome().toUpperCase() + "_" + aluno.getMatricula() + ".csv", StandardCharsets.UTF_8);
         CSVWriter csvWriter = new CSVWriter(outFile, ';', '"', '\\', "\n");
 
         csvWriter.writeNext(DATA_CSV_HEADER);
