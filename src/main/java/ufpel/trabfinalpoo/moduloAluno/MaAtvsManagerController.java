@@ -5,7 +5,6 @@ import ufpel.trabfinalpoo.generalClasses.Aluno;
 import ufpel.trabfinalpoo.generalClasses.AtividadeCadastrada;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
@@ -130,7 +129,7 @@ public class MaAtvsManagerController implements Initializable {
         });
     }
 
-    public void newAtv(ActionEvent event) {
+    public void newAtv() {
         Stage stage = new Stage();
 
         Messenger m = Messenger.getInstance();
@@ -160,7 +159,7 @@ public class MaAtvsManagerController implements Initializable {
             listviewAtvs.getItems().remove(selectedAtv);
     }
 
-    public void done(ActionEvent event) throws IOException {
+    public void done() throws IOException {
         /* Salva os dados do aluno em um .data */
 
         // Nome do arquivo de saída
